@@ -3,14 +3,14 @@
  "version": "1.0.0",
  "license": "MIT",
  "private": true,
- "workspaces": {
-  "packages": [
+ "workspaces": [
    "hardwareShop",
-   "products"
-  ]
- },
+   "products",
+    "libs/*"
+   ],
  "scripts": {
-  "start": "json-server ./generator.js --port 8080 && lerna run --parallel start",
+  "start": "lerna run --parallel start",
+  "start-server": "json-server ./generator.js --port 8080",
   "build": "lerna run build"
  },
  "devDependencies": {
