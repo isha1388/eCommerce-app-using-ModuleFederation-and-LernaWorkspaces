@@ -59,7 +59,8 @@ module.exports = (env, argv) => {
         name: "hardwareShop",
         remotes: {
           // products: isProduction ? process.env.PROD_APP1 : process.env.DEV_APP1
-          products: process.env.DEV_APP1
+          products: process.env.DEV_APP1,
+          cart: process.env.DEV_APP2
         },
         shared: {
           ...deps,

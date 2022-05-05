@@ -1,24 +1,25 @@
 {
- "name": "frontend-json-server-starter",
- "version": "1.0.0",
- "license": "MIT",
- "private": true,
- "workspaces": [
-   "hardwareShop",
-   "products",
+  "name": "frontend-json-server-starter",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "hardwareShop",
+    "products",
+    "cart",
     "libs/*"
-   ],
- "scripts": {
-  "start": "lerna run --parallel start",
-  "start-server": "json-server ./generator.js --port 8080",
-  "build": "lerna run build"
- },
- "devDependencies": {
-  "lerna": "^4.0.0"
- },
- "dependencies": {
-  "@babel/core": "^7.17.9",
-  "faker": "^5.4.0",
-  "json-server": "^0.16.3"
- }
+  ],
+  "scripts": {
+    "start": "lerna run --parallel start",
+    "start-server": "json-server ./generator.js --port 8080",
+    "build": "lerna run build"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.9",
+    "faker": "^5.4.0",
+    "json-server": "^0.16.3"
+  }
 }

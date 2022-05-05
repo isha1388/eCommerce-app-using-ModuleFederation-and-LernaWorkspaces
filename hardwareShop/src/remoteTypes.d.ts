@@ -6,3 +6,9 @@ declare module "products/ProductsApp" {
 	export default ProductsApp;
 }
 
+declare module "cart/ShoppingCart" {
+	const ShoppingCart: React.ComponentType;
+
+	export default ShoppingCart;
+}
+

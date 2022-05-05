@@ -2,13 +2,9 @@ import React from "react";
 import { useQuery } from "react-query";
 import { Product } from "@frontend-starter/sdk";
 import { Api } from "@frontend-starter/sdk";
-import { GridContainer, makeStyles } from "@frontend-starter/ui-components";
-import ProductItem from "./ProductItem";
+import { GridContainer, makeStyles, Typography } from "@frontend-starter/ui-components";
 
 const useStyles = makeStyles((theme) => ({
-  cardImg: {
-      height: '100px'
-  },
   outline: {
     border: '1px solid black',
     borderRadius: 8
@@ -23,7 +19,7 @@ const getProducts = async (): Promise<ProductsResp> => {
   return await Api.getRecommendedProducts();
 }
 
-const Products = () => {
+const ShoppingCart = () => {
   const { data, isLoading, error } = useQuery<ProductsResp>(
     "getProducts",
     getProducts
@@ -34,12 +30,12 @@ const Products = () => {
   if (isLoading) return <div>Loading ...</div>;
   if (error) return <div>Something went wrong ...</div>;
   return <>
-    <GridContainer className={classes.outline}>
-      {data?.data.map((product: Product) => (
-        <ProductItem key = {product.id} product={product} />
-      ))}
+  <GridContainer className={classes.outline}>
+    <Typography variant="h5" align="center">
+      Shopping Cart
+    </Typography>
     </GridContainer>
   </>
 };
 
-export default Products;
+export default ShoppingCart;
