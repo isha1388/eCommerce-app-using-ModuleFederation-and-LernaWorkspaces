@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+// import { Route, Switch, Router, withRouter } from "react-router-dom";
 import { GridItem, GridContainer, makeStyles, Typography } from "@frontend-starter/ui-components";
 const ProductsApp = React.lazy(() => import("products/ProductsApp"));
 const ShoppingCart = React.lazy(() => import("cart/ShoppingCart"));
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function App() {
+function App2() {
   const classes = useStyles();
   return (
     <Suspense fallback={"loading..."}>
@@ -36,4 +37,15 @@ function App() {
   );
 }
 
-export default App;
+// function App() {
+//   return (
+//     // <Router>
+//       <Switch>
+//       {/* <Route path="/:id" children={<App2 />} /> */}
+//       <Route path="/" children={<App2 />} />
+//       </Switch>
+//     // </Router>
+//   )
+// }
+
+export default App2;

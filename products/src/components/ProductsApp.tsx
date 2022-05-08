@@ -44,6 +44,7 @@ const isBottom = (ref: React.RefObject<HTMLDivElement>) => {
 
 const Products = () => {
   const [pageNo, setPageNo] = useState(1);
+  const [chars, setChars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const { loading, error, products } = useFetch(pageNo, searchQuery);
   const classes = useStyles();
@@ -60,9 +61,15 @@ const Products = () => {
   }, [pageNo]);
 
   const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(' search is clicked', e.target.value);
-    e.preventDefault();
-    setSearchQuery(e.target.value);
+    // console.log(' search is clicked', e.target.value);
+    // e.preventDefault();
+    setChars(e.target.value);
+  }
+
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if(event.key === 'Enter'){
+      setSearchQuery(chars);
+    }
   }
 
   if (loading) return <div className={classes.spinner}><CircularProgress /></div>;
@@ -75,6 +82,7 @@ const Products = () => {
           label="Search Text" 
           variant="outlined"
           onChange={onSearch}
+          onKeyUp={onKeyUp}
         />
       </GridItem>
       <GridItem>

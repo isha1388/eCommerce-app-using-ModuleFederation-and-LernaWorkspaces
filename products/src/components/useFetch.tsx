@@ -24,7 +24,7 @@ const useFetch = (pageNo: number, searchQuery: string) => {
       } catch (err: any) {
         setError(err);
       }
-    }, [pageNo]);
+    }, [pageNo, searchQuery]);
   
     useEffect(() => {
       sendQuery();
