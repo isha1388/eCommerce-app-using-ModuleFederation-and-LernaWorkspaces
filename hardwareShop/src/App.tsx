@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   outline: {
     border: '1px solid black',
     borderRadius: 8
+  },
+  productsWrapper: {
+    padding: '20px'
   }
 }))
 
@@ -25,7 +28,7 @@ function App() {
         </GridItem>
         <GridItem>
           <GridContainer columnSpacing={1}>
-            <GridItem xs={8}><ProductsApp /></GridItem>
+            <GridItem className={classes.productsWrapper} xs={8}><ProductsApp /></GridItem>
             <GridItem xs={4}><ShoppingCart /></GridItem>
           </GridContainer></GridItem>
       </GridContainer>

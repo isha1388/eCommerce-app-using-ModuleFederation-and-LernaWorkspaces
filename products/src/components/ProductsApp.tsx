@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
   outline: {
     border: '1px solid black',
     borderRadius: 8
+  },
+  wrapper: {
+    '&.MuiGrid-root': {
+      marginLeft: '0',
+      paddingRight: '16px'
+    }
   }
 }))
 
@@ -34,7 +40,7 @@ const Products = () => {
   if (isLoading) return <div>Loading ...</div>;
   if (error) return <div>Something went wrong ...</div>;
   return <>
-    <GridContainer className={classes.outline}>
+    <GridContainer className={`${classes.outline} ${classes.wrapper}`} spacing={2}>
       {data?.data.map((product: Product) => (
         <ProductItem key = {product.id} product={product} />
       ))}
