@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect, useState, useRef, ChangeEvent } from "react";
 import { Product } from "@frontend-starter/sdk";
-import { Api } from "@frontend-starter/sdk";
-import { GridContainer, makeStyles } from "@frontend-starter/ui-components";
+import { GridContainer, makeStyles, CircularProgress, TextField, GridItem } from "@frontend-starter/ui-components";
 import ProductItem from "./ProductItem";
 import useFetch from "./useFetch";
 
 const useStyles = makeStyles((theme) => ({
   cardImg: {
-      height: '100px'
+    height: '100px'
   },
   outline: {
     border: '1px solid black',
@@ -17,31 +16,76 @@ const useStyles = makeStyles((theme) => ({
     '&.MuiGrid-root': {
       marginLeft: '0',
       paddingRight: '16px'
-    }
+    },
+    // overflow: 'auto',
+    // height: '700px'
+  },
+  spinner: {
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchBox: {
+    padding: '16px'
   }
 }))
 
-type ProductsResp = {
-  data: Product[]
-};
+// type ProductsResp = {
+//   data: Product[]
+// };
 
-const getProducts = async (): Promise<ProductsResp> => {
-  return await Api.getRecommendedProducts();
+const isBottom = (ref: React.RefObject<HTMLDivElement>) => {
+  if (!ref.current) {
+    return false;
+  }
+  return ref.current.getBoundingClientRect().bottom <= window.innerHeight;
 }
 
 const Products = () => {
-  const { loading, error, products } = useFetch(1);
+  const [pageNo, setPageNo] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { loading, error, products } = useFetch(pageNo, searchQuery);
   const classes = useStyles();
-  console.log('######products from fetch', products);
-  // if (isLoading) return <LinearProgress />;
-  if (loading) return <div>Loading ...</div>;
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (isBottom(contentRef)) {
+        setPageNo(pageNo => pageNo + 1);
+      }
+    };
+    document.addEventListener('scroll', onScroll);
+    return () => document.removeEventListener('scroll', onScroll);
+  }, [pageNo]);
+
+  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(' search is clicked', e.target.value);
+    e.preventDefault();
+    setSearchQuery(e.target.value);
+  }
+
+  if (loading) return <div className={classes.spinner}><CircularProgress /></div>;
   if (error) return <div>Something went wrong ...</div>;
+
   return <>
-    <GridContainer className={`${classes.outline} ${classes.wrapper}`} spacing={2}>
-      {products.map((product: Product) => (
-        <ProductItem key = {product.id} product={product} />
-      ))}
+    <GridContainer className={`${classes.outline}`}>
+      <GridItem className={classes.searchBox}>
+        <TextField 
+          label="Search Text" 
+          variant="outlined"
+          onChange={onSearch}
+        />
+      </GridItem>
+      <GridItem>
+        <GridContainer className={classes.wrapper} spacing={2}>
+          {products.map((product: Product) => (
+            <ProductItem key={product.id} product={product} />
+          ))}
+        </GridContainer>
+      </GridItem>
     </GridContainer>
+    <div ref={contentRef}></div>
   </>
 };
 

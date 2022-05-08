@@ -11,24 +11,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-type ProductsResp = {
-  data: Product[]
-};
+// type ProductsResp = {
+//   data: Product[]
+// };
 
-const getProducts = async (): Promise<ProductsResp> => {
-  return await Api.getRecommendedProducts();
-}
+// const getProducts = async (): Promise<ProductsResp> => {
+//   return await Api.getRecommendedProducts();
+// }
 
 const ShoppingCart = () => {
-  const { data, isLoading, error } = useQuery<ProductsResp>(
-    "getProducts",
-    getProducts
-  );
+  // const { data, isLoading, error } = useQuery<ProductsResp>(
+  //   "getProducts",
+  //   getProducts
+  // );
   const classes = useStyles();
-  console.log('######dattttaaa', data);
-  // if (isLoading) return <LinearProgress />;
-  if (isLoading) return <div>Loading ...</div>;
-  if (error) return <div>Something went wrong ...</div>;
+  // if (isLoading) return <div>Loading ...</div>;
+  // if (error) return <div>Something went wrong ...</div>;
   return <>
   <GridContainer className={classes.outline}>
     <Typography variant="h5" align="center">
