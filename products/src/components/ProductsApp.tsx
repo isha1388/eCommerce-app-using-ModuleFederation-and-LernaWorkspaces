@@ -1,9 +1,9 @@
 import React from "react";
-import { useQuery } from "react-query";
 import { Product } from "@frontend-starter/sdk";
 import { Api } from "@frontend-starter/sdk";
 import { GridContainer, makeStyles } from "@frontend-starter/ui-components";
 import ProductItem from "./ProductItem";
+import useFetch from "./useFetch";
 
 const useStyles = makeStyles((theme) => ({
   cardImg: {
@@ -30,18 +30,15 @@ const getProducts = async (): Promise<ProductsResp> => {
 }
 
 const Products = () => {
-  const { data, isLoading, error } = useQuery<ProductsResp>(
-    "getProducts",
-    getProducts
-  );
+  const { loading, error, products } = useFetch(1);
   const classes = useStyles();
-  console.log('######dattttaaa', data);
+  console.log('######products from fetch', products);
   // if (isLoading) return <LinearProgress />;
-  if (isLoading) return <div>Loading ...</div>;
+  if (loading) return <div>Loading ...</div>;
   if (error) return <div>Something went wrong ...</div>;
   return <>
     <GridContainer className={`${classes.outline} ${classes.wrapper}`} spacing={2}>
-      {data?.data.map((product: Product) => (
+      {products.map((product: Product) => (
         <ProductItem key = {product.id} product={product} />
       ))}
     </GridContainer>
