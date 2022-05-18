@@ -8,12 +8,16 @@ const useStyles = makeStyles((theme) => ({
   fullWidth: {
     width: '100%'
   },
-  outline: {
+  hsOutline: {
     border: '1px solid black',
     borderRadius: 8
   },
   productsWrapper: {
-    padding: '20px'
+    padding: '20px',
+    overflow: 'auto'
+  },
+  shoppingCartWrapper: {
+    paddingTop: '20px'
   }
 }))
 
@@ -21,16 +25,16 @@ function App2() {
   const classes = useStyles();
   return (
     <Suspense fallback={"loading..."}>
-      <GridContainer rowSpacing={1} direction={"row"}>
-        <GridItem className={`${classes.fullWidth} ${classes.outline}`}>
+      <GridContainer direction={"row"}>
+        <GridItem className={`${classes.fullWidth} ${classes.hsOutline}`}>
           <Typography variant="h4" align="center">
             Smart Hardware Shop
           </Typography>
         </GridItem>
-        <GridItem>
+        <GridItem className={`${classes.fullWidth}`}>
           <GridContainer columnSpacing={1}>
             <GridItem className={classes.productsWrapper} xs={8}><ProductsApp /></GridItem>
-            <GridItem xs={4}><ShoppingCart /></GridItem>
+            <GridItem className={classes.shoppingCartWrapper} xs={4}><ShoppingCart /></GridItem>
           </GridContainer></GridItem>
       </GridContainer>
     </Suspense>
