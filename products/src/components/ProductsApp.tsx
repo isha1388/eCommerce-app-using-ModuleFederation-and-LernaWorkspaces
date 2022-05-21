@@ -20,11 +20,12 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: '0',
       paddingRight: '16px'
     },
-    // overflow: 'auto',
-    // height: '700px'
+  },
+  productsWrapper: {
+    overflow: 'auto',
+    height: '380px'
   },
   spinner: {
-    // display: 'flex',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -43,7 +44,7 @@ const isBottom = (ref: React.RefObject<HTMLDivElement>) => {
   if (!ref.current) {
     return false;
   }
-  // console.log('ref.current.getBoundingClientRect().bottom', ref.current.getBoundingClientRect().bottom);
+  console.log('ref.current.getBoundingClientRect().bottom', ref.current.getBoundingClientRect().bottom);
   // console.log('window.innerHeight', window.innerHeight);
   return ref.current.getBoundingClientRect().bottom <= window.innerHeight;
 }
@@ -52,16 +53,17 @@ const Products = () => {
   const [pageNo, setPageNo] = useState(1);
   const [chars, setChars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [scrollPosition, setScrollPosition] = useState(0);
+  // const [scrollPosition, setScrollPosition] = useState(0);
   const { loading, error, products } = useFetch(pageNo, searchQuery);
   const classes = useStyles();
   const contentRef = useRef<HTMLDivElement>(null);
 
   const onScroll = (e: any) => {
+    console.log('contentRef--', contentRef);
     if (isBottom(contentRef)) {
       setPageNo(pageNo => pageNo + 1);
-      setScrollPosition(e.target.scrollHeight);
-      contentRef.current?.scrollTo(0, scrollPosition);
+      // setScrollPosition(e.target.scrollHeight);
+      // contentRef.current?.scrollTo(0, scrollPosition);
       // console.log('#######', contentRef.current?.scrollTo(0, scrollPosition));
     }
   };
@@ -82,7 +84,7 @@ const Products = () => {
   if (error) return <div>Something went wrong ...{error}</div>;
 
   return <>
-    <GridContainer className={`${classes.outline} ${classes.spinner}`} onScroll={(e) => onScroll(e)}>
+    <GridContainer className={`${classes.outline} ${classes.spinner}`}>
       {loading ? <GridItem>
         <CircularProgress />
       </GridItem> : <>
@@ -94,7 +96,7 @@ const Products = () => {
             onKeyUp={onKeyUp}
           />
         </GridItem>
-        <GridItem>
+        <GridItem className={classes.productsWrapper}  onScroll={(e) => onScroll(e)}>
           <GridContainer className={classes.wrapper} spacing={2}>
             {products.map((product: Product) => (
               <ProductItem key={product.id} product={product} />
