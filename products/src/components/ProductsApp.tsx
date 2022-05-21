@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 import { Product } from "@frontend-starter/sdk";
 import { GridContainer, makeStyles, CircularProgress, TextField, GridItem } from "@frontend-starter/ui-components";
 import ProductItem from "./ProductItem";
@@ -62,36 +62,31 @@ const Products = () => {
       setPageNo(pageNo => pageNo + 1);
       setScrollPosition(e.target.scrollHeight);
       contentRef.current?.scrollTo(0, scrollPosition);
-      console.log('#######', contentRef.current?.scrollTo(0, scrollPosition));
+      // console.log('#######', contentRef.current?.scrollTo(0, scrollPosition));
     }
   };
-
-  // useEffect(() => {
-  //   document.addEventListener('scroll', onScroll);
-  //   return () => document.removeEventListener('scroll', onScroll);
-  // }, [pageNo]);
 
   const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
     // console.log(' search is clicked', e.target.value);
     // e.preventDefault();
     setChars(e.target.value);
+    // throw new Error();
   }
 
   const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       setSearchQuery(chars);
     }
-  }
+  } 
 
-  // if (loading) return <div className={classes.spinner}><CircularProgress /></div>;
-  // if (error) return <div>Something went wrong ...</div>;
+  if (error) return <div>Something went wrong ...{error}</div>;
 
   return <>
     <GridContainer className={`${classes.outline} ${classes.spinner}`} onScroll={(e) => onScroll(e)}>
       {loading ? <GridItem>
         <CircularProgress />
       </GridItem> : <>
-        <GridItem className={classes.searchBox}>
+      <GridItem className={classes.searchBox}>
           <TextField
             label="Search Text"
             variant="outlined"

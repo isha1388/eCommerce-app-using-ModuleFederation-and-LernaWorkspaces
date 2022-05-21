@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductsApp from './components/ProductsApp';
-import { makeStyles } from "@frontend-starter/ui-components";
+import { makeStyles, ErrorBoundary } from "@frontend-starter/ui-components";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -12,7 +12,9 @@ function App() {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
-       <ProductsApp/>
+      {/* <ErrorBoundary> */}
+        <ProductsApp />
+      {/* </ErrorBoundary> */}
     </div>
   );
 }

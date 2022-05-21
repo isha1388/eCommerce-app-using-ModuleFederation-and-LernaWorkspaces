@@ -11,7 +11,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <App />
+  // <React.provider context={shared}>
+    <App />
+  // </React.provider>
 );
 // root.render(
 //    <React.StrictMode>

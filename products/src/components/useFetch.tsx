@@ -1,28 +1,30 @@
-import React, {useEffect, useState, useCallback} from "react";
-import { Api } from "@frontend-starter/sdk";
+import {useEffect, useState, useCallback} from "react";
+import { Api, Product } from "@frontend-starter/sdk";
+import axios from "axios";
 
 const useFetch = (pageNo: number, searchQuery: string) => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [products, setProducts] = useState([]);
-    let res: any;
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState('');
+    const [products, setProducts] = useState<Product[]>([]);
 
     const sendQuery = useCallback(async () => {
       try {
         setLoading(true);
-        setError(false);
         
         if(searchQuery.trim().length){
-          res = await Api.getQueriedProducts(searchQuery);
+          const res = await Api.getQueriedProducts(searchQuery);
           setProducts(res.data);
         } else {
-          res = await Api.getPaginatedProducts(pageNo, 4);
-          setProducts(((prev: any) => [...prev, ...res.data]) as any);
+          const res = await Api.getPaginatedProducts(pageNo, 6);
+          setProducts(((prev: Product[]) => [...prev, ...res.data]));
         }
        
         setLoading(false);
-      } catch (err: any) {
-        setError(err);
+      } catch (err) {
+        if(axios.isAxiosError(err)){
+          console.log('API failure', err)
+          setError(err.message);
+        }
       }
     }, [pageNo, searchQuery]);
   

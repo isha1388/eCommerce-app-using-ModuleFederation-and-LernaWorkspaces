@@ -1,5 +1,4 @@
-import axios from "axios";
-import { Product } from '../model/Model';
+import axios, {AxiosResponse} from "axios";
 
 const http = axios.create({
   baseURL: "http://localhost:8080/",
@@ -8,22 +7,29 @@ const http = axios.create({
   }
 })
 
+http.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    console.log('come inside interceptorsss')
+  }
+)
+
 class API {
-  getAllProducts() {
-    return http.get<Product[]>("/products");
+  // getAllProducts<t>(): Promise<t> {
+  //   return http.get<Product[]>("/products");
+  // }
+
+  getQueriedProducts<T>(query: string): Promise<AxiosResponse> {
+    return http.get(`/products?q=${query}`);
   }
 
-  getQueriedProducts(query: string) {
-    return http.get<Product[]>(`/products?q=${query}`);
+  getPaginatedProducts<T>(page_number: number, number_of_entries = 6): Promise<AxiosResponse> {
+    return http.get(`/products?_page=${page_number}&_limit=${number_of_entries}`);
   }
 
-  getPaginatedProducts(page_number: number, number_of_entries = 4) {
-    return http.get<Product[]>(`/products?_page=${page_number}&_limit=${number_of_entries}`);
-  }
-
-  getRecommendedProducts() {
-    return http.get<Product[]>("/recommendeds");
-  }
+  // getRecommendedProducts() {
+  //   return http.get<Product[]>("/recommendeds");
+  // }
 }
 
 export default new API();
