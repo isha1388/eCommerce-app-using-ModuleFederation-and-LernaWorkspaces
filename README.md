@@ -37,3 +37,5 @@ TO-DO:
 - Implement react-routing to give user-id in the home-route so that it can be accessible from all the MFEs.
 - Adding the product to cart from the products MFE so that it reflects on the cart MFE.
 - Reading the role of the user and updating the kebab-menu actions.
+
+![CPT2205221938-1176x553](https://user-images.githubusercontent.com/11497094/169699418-52192c8b-52e8-41e7-8ee9-88530a19ce75.gif)
