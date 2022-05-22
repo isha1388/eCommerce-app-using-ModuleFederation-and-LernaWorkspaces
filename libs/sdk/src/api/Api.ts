@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 
 const http = axios.create({
   baseURL: "http://localhost:8080/",
@@ -9,8 +9,8 @@ const http = axios.create({
 
 http.interceptors.response.use(
   (res) => res,
-  (err) => {
-    console.log('come inside interceptorsss')
+  (err: AxiosError) => {
+    console.log('come inside interceptorsss', err)
   }
 )
 
@@ -19,11 +19,11 @@ class API {
   //   return http.get<Product[]>("/products");
   // }
 
-  getQueriedProducts<T>(query: string): Promise<AxiosResponse> {
+  getQueriedProducts(query: string): Promise<AxiosResponse> {
     return http.get(`/products?q=${query}`);
   }
 
-  getPaginatedProducts<T>(page_number: number, number_of_entries = 6): Promise<AxiosResponse> {
+  getPaginatedProducts(page_number: number, number_of_entries = 6): Promise<AxiosResponse> {
     return http.get(`/products?_page=${page_number}&_limit=${number_of_entries}`);
   }
 

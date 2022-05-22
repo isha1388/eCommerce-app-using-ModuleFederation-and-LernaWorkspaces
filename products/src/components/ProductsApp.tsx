@@ -44,7 +44,7 @@ const isBottom = (ref: React.RefObject<HTMLDivElement>) => {
   if (!ref.current) {
     return false;
   }
-  console.log('ref.current.getBoundingClientRect().bottom', ref.current.getBoundingClientRect().bottom);
+  // console.log('ref.current.getBoundingClientRect().bottom', ref.current.getBoundingClientRect().bottom);
   // console.log('window.innerHeight', window.innerHeight);
   return ref.current.getBoundingClientRect().bottom <= window.innerHeight;
 }
@@ -59,12 +59,19 @@ const Products = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const onScroll = (e: any) => {
-    console.log('contentRef--', contentRef);
+    // console.log('eeeee--', e);
+    console.log('productsWrapper scrollTop---', document.getElementById('productsWrapper')?.scrollTop)
+    // console.log('productsWrapper scrollLeft---', document.getElementById('productsWrapper')?.scrollLeft)
+    console.log('scroll.target.scrollHeight--', e.target.scrollHeight);
     if (isBottom(contentRef)) {
       setPageNo(pageNo => pageNo + 1);
       // setScrollPosition(e.target.scrollHeight);
-      // contentRef.current?.scrollTo(0, scrollPosition);
+      // contentRef.current?.scrollTo(0, e.target.scrollHeight);
       // console.log('#######', contentRef.current?.scrollTo(0, scrollPosition));
+      // if(document.getElementById('productsWrapper') !== null){
+        document.getElementById('productsWrapper')!.scrollTop = e.target.scrollHeight;
+      // }
+        
     }
   };
 
@@ -96,7 +103,7 @@ const Products = () => {
             onKeyUp={onKeyUp}
           />
         </GridItem>
-        <GridItem className={classes.productsWrapper}  onScroll={(e) => onScroll(e)}>
+        <GridItem className={classes.productsWrapper}  onScroll={(e) => onScroll(e)} id="productsWrapper">
           <GridContainer className={classes.wrapper} spacing={2}>
             {products.map((product: Product) => (
               <ProductItem key={product.id} product={product} />
